@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+ngsvenv/
+
+# Generated figures
+figures/*.pdf
+figures/*.png
+
+# Cached computation data (committed; small and enables instant figure generation)
+# data/*.npz
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

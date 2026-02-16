@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "richards-nitsche-signorini"
+version = "1.0.0"
+description = "Reproducibility code for: Operator-split mixed FEM for Richards equation with Nitsche-Signorini seepage conditions."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Camilo Tello Fachin" },
+    { name = "Federico Gatti" },
+    { name = "Wouter Tonnon" },
+]
+keywords = ["richards-equation", "mixed-fem", "signorini", "ngsolve", "operator-splitting"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "ngsolve",
+    "scipy>=1.17.0",
+]
+
+[project.optional-dependencies]
+notebooks = ["jupyter", "ipykernel", "webgui_jupyter_widgets"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
