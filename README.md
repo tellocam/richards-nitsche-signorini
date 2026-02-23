@@ -1,12 +1,17 @@
 # richards-nitsche-signorini
 
-Reproducibility code for:
+Reproducibility code and Lean 4 formalization for:
 
 > **Operator-split mixed finite elements for Richards equation with Nitsche-Signorini seepage conditions**
 >
 > Camilo Tello Fachin, Federico Gatti, Wouter Tonnon
 >
 > *Computer Methods in Applied Mechanics and Engineering* (submitted)
+
+This repository contains two components:
+
+- **Reproducibility code** (Python/NGSolve) — operator-split mixed finite element solver, figure-generation scripts, interactive notebooks, and pre-computed data to reproduce all results in the paper.
+- **Lean 4 formalization** — machine-checked proofs of the analytical results in Section 4 (degeneracy asymptotics, shock structure, conservation law, operator-splitting error, and combined convergence estimates).
 
 ## Quick start
 
