@@ -161,7 +161,7 @@ A Lean 4 formalization of the analytical results from Section 4 of the paper.
 ### Overview
 
 The `formalization/` directory contains a machine-checked proof of the theoretical
-results in Section 4. It formalizes Propositions 4.1–4.10 and Theorem 4.10 using
+results in Section 4. It formalizes Propositions 4.1–4.9, Corollaries 4.6a–b, and Theorem 4.10 using
 Lean 4 + Mathlib v4.27.0. The formalization is standalone (no dependencies beyond
 Mathlib) and is organized into two layers: a Foundations layer (endpoint filters,
 constitutive model axioms) and a Main proof chain that builds the convergence
@@ -177,21 +177,29 @@ lake build            # Verify all proofs (~2 min)
 
 ### Theorem Inventory
 
-| Section | Result | Type | Classification |
-|---------|--------|------|----------------|
-| 4.1 | Prop 4.1 (dry-end degeneracy) | axiom | Established |
-| 4.2 | Prop 4.2 (saturation singularity) | axiom | Established |
-| 4.3 | Prop 4.3 (shock structure) | theorem | Proved |
-| 4.4 | Prop 4.4 (Rankine-Hugoniot) | theorem | Proved |
-| 4.5 | Prop 4.5 (entropy condition) | theorem | Proved |
-| 4.6 | Prop 4.6 (diffusion regularity) | axiom | Established |
-| 4.7 | Prop 4.7 (splitting error) | theorem | Proved |
-| 4.8 | Prop 4.8 (Godunov consistency) | theorem | Proved |
-| 4.8.1 | Prop 4.9 (Nitsche consistency) | theorem | Proved |
-| 4.8.2 | Prop 4.10 (Nitsche stability) | theorem | Proved |
-| 4.8.3 | Thm 4.10 (combined convergence) | theorem | Proved |
+| Paper ref | Lean name | Type | Classification |
+|-----------|-----------|------|----------------|
+| §4.1, eq. (4.5)–(4.13) | `K_Se_zero`, `K_Se_one`, ..., `C_Se_asymp_dry` | axiom (×10) | Established (Mualem 1976, vG 1980) |
+| Prop 4.1 | `prop_4_1_dry_end_asymp`, `prop_4_1_D_tends_zero` | axiom | Established |
+| Prop 4.2 | `prop_4_2_saturation_blowup`, `prop_4_2_D_tends_top` | axiom | Established |
+| Prop 4.3 | `prop_4_3_RH_speed`, `prop_4_3_lax_entropy` | theorem | Proved |
+| Prop 4.4a,b | `prop_4_4a_existence`, `prop_4_4b_L1_contraction` | axiom | Established (Carrillo 1999) |
+| Prop 4.4c | `prop_4_4c_uniqueness` | axiom | Established |
+| Prop 4.5 | `prop_4_5_front_ratio` | axiom | Established |
+| Cor 4.6a,b | `cor_4_6a_Kinv_blowup`, `cor_4_6b_condition_number` | axiom | Established |
+| — | `K_inv_at_one` | theorem | Proved |
+| Prop 4.7 | `prop_4_7_splitting_error` | axiom | Established (Jakobsen-Karlsen 2005) |
+| — | `splitting_error_vanishes`, `splitting_improves_with_Gr` | theorem | Proved |
+| Prop 4.8 | `prop_4_8_godunov_sub` | axiom | Established (Kuznetsov 1976) |
+| Prop 4.9 | `prop_4_9_godunov_sat` | axiom | Novel |
+| — | `sat_rate_worse_than_sub` | theorem | Proved |
+| — | `diffusion_error_Oh` | axiom | Established (Brezzi-Fortin 1991) |
+| Thm 4.10(a) | `thm_4_10_combined_sub` | theorem | Proved |
+| Thm 4.10(b) | `thm_4_10_combined_sat` | theorem | Proved |
+| — | `spatial_rate_sublinear` | theorem | Proved |
+| — | `splitting_accuracy_improves_with_degeneracy` | theorem | Proved |
 
-Summary: 17 axioms, 1 opaque definition, 5 definitions, 12 proved theorems.
+Summary: 19 axioms, 1 opaque definition, 5 definitions, 12 proved theorems.
 
 ### Classification Scheme
 
@@ -209,10 +217,13 @@ formalization/
 ├── lean-toolchain
 ├── RichardsNitscheSignorini.lean          # Root import
 ├── RichardsNitscheSignorini/
-│   ├── Main.lean                           # Proof chain (Props 4.1-4.10, Thm 4.10)
+│   ├── Main.lean                           # Proof chain (Props 4.1-4.9, Thm 4.10)
 │   └── Foundations/
 │       ├── Filters.lean                    # Endpoint filters (Se → 0+, Se → 1-)
 │       └── ConstitutiveModel.lean          # VGM params, K/C/D functions, axioms
+├── graphs/
+│   ├── proof_chain.dot                     # Graphviz source (generated)
+│   └── proof_chain.pdf                     # Proof dependency graph (generated)
 └── scripts/
     └── generate_proof_graph.py             # Proof chain visualization
 ```
