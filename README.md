@@ -154,6 +154,71 @@ The `src/nitsche_signorini/` package provides:
 All dependencies are managed via `pyproject.toml` and installable with `uv sync`.
 Works on Linux (x86_64) and macOS (Intel & Apple Silicon).
 
+## Formalization
+
+A Lean 4 formalization of the analytical results from Section 4 of the paper.
+
+### Overview
+
+The `formalization/` directory contains a machine-checked proof of the theoretical
+results in Section 4. It formalizes Propositions 4.1–4.10 and Theorem 4.10 using
+Lean 4 + Mathlib v4.27.0. The formalization is standalone (no dependencies beyond
+Mathlib) and is organized into two layers: a Foundations layer (endpoint filters,
+constitutive model axioms) and a Main proof chain that builds the convergence
+argument step by step.
+
+### Building
+
+```bash
+cd formalization
+lake exe cache get    # Download precompiled Mathlib (~5 min first time)
+lake build            # Verify all proofs (~2 min)
+```
+
+### Theorem Inventory
+
+| Section | Result | Type | Classification |
+|---------|--------|------|----------------|
+| 4.1 | Prop 4.1 (dry-end degeneracy) | axiom | Established |
+| 4.2 | Prop 4.2 (saturation singularity) | axiom | Established |
+| 4.3 | Prop 4.3 (shock structure) | theorem | Proved |
+| 4.4 | Prop 4.4 (Rankine-Hugoniot) | theorem | Proved |
+| 4.5 | Prop 4.5 (entropy condition) | theorem | Proved |
+| 4.6 | Prop 4.6 (diffusion regularity) | axiom | Established |
+| 4.7 | Prop 4.7 (splitting error) | theorem | Proved |
+| 4.8 | Prop 4.8 (Godunov consistency) | theorem | Proved |
+| 4.8.1 | Prop 4.9 (Nitsche consistency) | theorem | Proved |
+| 4.8.2 | Prop 4.10 (Nitsche stability) | theorem | Proved |
+| 4.8.3 | Thm 4.10 (combined convergence) | theorem | Proved |
+
+Summary: 17 axioms, 1 opaque definition, 5 definitions, 12 proved theorems.
+
+### Classification Scheme
+
+Every declaration in `Main.lean` carries one of these tags:
+
+- `[Established: Citation]` — known result from the literature, axiomatized with reference
+- `[Novel: Citation]` — original contribution of this paper
+- `[Proved: chain description]` — theorem proved in Lean from the axioms above
+
+### File Structure
+
+```
+formalization/
+├── lakefile.toml
+├── lean-toolchain
+├── RichardsNitscheSignorini.lean          # Root import
+├── RichardsNitscheSignorini/
+│   ├── Main.lean                           # Proof chain (Props 4.1-4.10, Thm 4.10)
+│   └── Foundations/
+│       ├── Filters.lean                    # Endpoint filters (Se → 0+, Se → 1-)
+│       └── ConstitutiveModel.lean          # VGM params, K/C/D functions, axioms
+└── scripts/
+    └── generate_proof_graph.py             # Proof chain visualization
+```
+
+The formalization is released under the MIT license.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
