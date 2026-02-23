@@ -74,8 +74,17 @@ richards-nitsche-signorini/
 ├── data/                                   # Pre-computed results (.npz cache, 132 KB)
 │   └── *.npz                               # One file per test case
 │
-└── figures/                                # Generated PDF figures (not committed)
-    └── *.pdf                               # One file per script
+├── figures/                                # Generated PDF figures (not committed)
+│   └── *.pdf                               # One file per script
+│
+└── formalization/                          # Lean 4 formalization of Section 4
+    ├── lakefile.toml
+    ├── RichardsNitscheSignorini.lean       # Root import
+    ├── RichardsNitscheSignorini/
+    │   ├── Main.lean                       # Proof chain (Props 4.1-4.9, Thm 4.10)
+    │   └── Foundations/                    # Endpoint filters, constitutive axioms
+    ├── graphs/                             # Proof dependency graph (generated)
+    └── scripts/                            # Graph generation script
 ```
 
 ## Figure index
